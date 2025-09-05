@@ -1,46 +1,51 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { Eye, EyeOff } from "lucide-react"
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [showPassword, setShowPassword] = useState(false)
-  const [error, setError] = useState("")
-  const router = useRouter()
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
+  const router = useRouter();
 
   const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (email === "user@example.com" && password === "user123") {
-      localStorage.setItem("isAuthenticated", "true")
-      router.push("/dashboard")
+      localStorage.setItem("isAuthenticated", "true");
+      router.push("/dashboard");
     } else {
-      setError("Invalid credentials")
+      setError("Invalid credentials");
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
       <Card className="w-full max-w-md bg-white shadow-lg">
         <CardHeader className="text-center pb-4">
           <div className="flex items-center justify-center mb-4">
-            <img src="/kraftHeinz_logo.png" alt="Kimberly-Clark" className="h-8" />
+            <img src="/kraftHeinz_logo.png" alt="kraft-heinz" className="h-8" />
           </div>
-          <h1 className="text-2xl font-bold text-gray-900">R&D Data Product Hub</h1>
+          <h1 className="text-2xl font-bold text-gray-900">
+            R&D Data Product Hub
+          </h1>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
-              <Label htmlFor="email" className="text-sm font-medium text-gray-700">
+              <Label
+                htmlFor="email"
+                className="text-sm font-medium text-gray-700"
+              >
                 Email Address
               </Label>
               <Input
@@ -55,7 +60,10 @@ export default function LoginPage() {
             </div>
 
             <div>
-              <Label htmlFor="password" className="text-sm font-medium text-gray-700">
+              <Label
+                htmlFor="password"
+                className="text-sm font-medium text-gray-700"
+              >
                 Password
               </Label>
               <div className="relative mt-1">
@@ -80,14 +88,19 @@ export default function LoginPage() {
 
             {error && <div className="text-red-600 text-sm">{error}</div>}
 
-            <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700">
+            <Button
+              type="submit"
+              className="w-full bg-blue-600 hover:bg-blue-700"
+            >
               Sign In
             </Button>
 
-            <div className="text-center text-sm text-gray-500 mt-4">Demo credentials: user@example.com / user123</div>
+            <div className="text-center text-sm text-gray-500 mt-4">
+              Demo credentials: user@example.com / user123
+            </div>
           </form>
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

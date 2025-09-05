@@ -1,20 +1,47 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
-import Sidebar from "@/components/sidebar"
-import Header from "@/components/header"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Label } from "@/components/ui/label"
-import { ArrowLeft, Plus, Upload, Link, X, Edit, Download, Printer, ChevronDown } from "lucide-react"
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import Sidebar from "@/components/sidebar";
+import Header from "@/components/header";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Label } from "@/components/ui/label";
+import {
+  ArrowLeft,
+  Plus,
+  Upload,
+  Link,
+  X,
+  Edit,
+  Download,
+  Printer,
+  ChevronDown,
+} from "lucide-react";
 
 const countries = [
   "United States",
@@ -33,7 +60,7 @@ const countries = [
   "South Korea",
   "India",
   "China", // Added China
-]
+];
 
 // Language mapping for countries
 const countryLanguages = {
@@ -53,17 +80,11 @@ const countryLanguages = {
   "South Korea": "Korean",
   India: "English/Hindi",
   China: "Chinese",
-}
+};
 
-const categories = [
-  "Condiments",
-  "Cheese",
-  "Snacks",
-  "Meals",
-  "Frozen foods"
-]
+const categories = ["Condiments", "Cheese", "Snacks", "Meals", "Frozen foods"];
 
-const kraftProductNames=[
+const kraftProductNames = [
   "Kraft Original Mac & Cheese Macaroni and Cheese Dinner, 7.25 oz Box",
   "Kraft Sandwich Spread, 15 Oz Ja",
   "KD Kraft Dinner Vegan Plant Based White Cheddar Macaroni & Cheese, 170g/6 oz",
@@ -73,9 +94,9 @@ const kraftProductNames=[
   "Kraft Pimento Spread made with Philadelphia Cream Cheese, Jar",
   "HEINZ Ketchup, Mustard & Relish Picnic Pack- 4pk",
   "Heinz 1 Gallon Apple Cider Vinegar",
-  "Heinz 9 Gram Honey Portion Packets - 200/Case"
-]
-const brands=[
+  "Heinz 9 Gram Honey Portion Packets - 200/Case",
+];
+const brands = [
   "Heinz",
   "Kraft Foods Inc",
   "Grey Poupon",
@@ -84,26 +105,26 @@ const brands=[
   "Claussen pickels",
   "Jet-puffed Marshmallows",
   "Lunchables",
-  "Gevalia"
-]
+  "Gevalia",
+];
 
 const productsByCategory = {
-  "Condiments": kraftProductNames,
-  "Cheese": kraftProductNames,
-  "Snacks": kraftProductNames,
-  "Meals": kraftProductNames,
+  Condiments: kraftProductNames,
+  Cheese: kraftProductNames,
+  Snacks: kraftProductNames,
+  Meals: kraftProductNames,
   // Professional: ["KLEENEX PROFESSIONAL TISSUES", "SCOTT PROFESSIONAL TOWELS"],
   "Frozen foods": kraftProductNames,
-}
+};
 
 const brandsByCategory = {
-  "Condiments": brands,
-  "Cheese": brands,
-  "Snacks": brands,
-  "Meals": brands,
+  Condiments: brands,
+  Cheese: brands,
+  Snacks: brands,
+  Meals: brands,
   // Professional: ["KLEENEX PROFESSIONAL TISSUES", "SCOTT PROFESSIONAL TOWELS"],
   "Frozen foods": brands,
-}
+};
 
 const brandCodes = {
   Heinz: ["HG-001", "HG-002", "HG-003"],
@@ -122,9 +143,9 @@ const brandCodes = {
   "Baker's chocolate": ["BC-001"],
   "Claussen pickels": ["CP-001"],
   "Jet-puffed Marshmallows": ["JM-001"],
-  "Lunchables": ["LU-001"],
-  "Gevalia": ["GV-001"]
-}
+  Lunchables: ["LU-001"],
+  Gevalia: ["GV-001"],
+};
 
 // Updated to have all data sources checked by default and include China
 const dataSourcesByCountry = {
@@ -175,113 +196,130 @@ const dataSourcesByCountry = {
     { name: "SAMR Product Safety Certification", checked: true },
     { name: "MIIT Industry Standards Compliance", checked: true },
   ],
-}
+};
 
 export default function CreateSafetyReport() {
-  const router = useRouter()
-  const [selectedCountry, setSelectedCountry] = useState("")
-  const [selectedCategory, setSelectedCategory] = useState("")
-  const [selectedProduct, setSelectedProduct] = useState("")
-  const [selectedBrand, setSelectedBrand] = useState("")
-  const [selectedBrandCode, setSelectedBrandCode] = useState("")
-  const [warningStatement, setWarningStatement] = useState("")
-  const [useInstructions, setUseInstructions] = useState("")
-  const [assessorName, setAssessorName] = useState("")
-  const [date, setDate] = useState("")
-  const [dataSources, setDataSources] = useState<any[]>([])
+  const router = useRouter();
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedProduct, setSelectedProduct] = useState("");
+  const [selectedBrand, setSelectedBrand] = useState("");
+  const [selectedBrandCode, setSelectedBrandCode] = useState("");
+  const [warningStatement, setWarningStatement] = useState("");
+  const [useInstructions, setUseInstructions] = useState("");
+  const [assessorName, setAssessorName] = useState("");
+  const [date, setDate] = useState("");
+  const [dataSources, setDataSources] = useState<any[]>([]);
 
   // Report generation states
-  const [showReportPreview, setShowReportPreview] = useState(false)
-  const [isGenerating, setIsGenerating] = useState(false)
-  const [generatedReport, setGeneratedReport] = useState<any>(null)
+  const [showReportPreview, setShowReportPreview] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [generatedReport, setGeneratedReport] = useState<any>(null);
 
   // New data source dialog states
-  const [showAddDataSourceDialog, setShowAddDataSourceDialog] = useState(false)
-  const [uploadMethod, setUploadMethod] = useState<"file" | "url">("file")
-  const [newDataSourceName, setNewDataSourceName] = useState("")
-  const [newDataSourceDescription, setNewDataSourceDescription] = useState("")
-  const [selectedFile, setSelectedFile] = useState<File | null>(null)
-  const [webUrl, setWebUrl] = useState("")
+  const [showAddDataSourceDialog, setShowAddDataSourceDialog] = useState(false);
+  const [uploadMethod, setUploadMethod] = useState<"file" | "url">("file");
+  const [newDataSourceName, setNewDataSourceName] = useState("");
+  const [newDataSourceDescription, setNewDataSourceDescription] = useState("");
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [webUrl, setWebUrl] = useState("");
 
   useEffect(() => {
-    const isAuthenticated = localStorage.getItem("isAuthenticated")
+    const isAuthenticated = localStorage.getItem("isAuthenticated");
     if (!isAuthenticated) {
-      router.push("/login")
+      router.push("/login");
     }
-  }, [router])
+  }, [router]);
 
   useEffect(() => {
-    if (selectedCountry && dataSourcesByCountry[selectedCountry as keyof typeof dataSourcesByCountry]) {
-      setDataSources([...dataSourcesByCountry[selectedCountry as keyof typeof dataSourcesByCountry]])
+    if (
+      selectedCountry &&
+      dataSourcesByCountry[selectedCountry as keyof typeof dataSourcesByCountry]
+    ) {
+      setDataSources([
+        ...dataSourcesByCountry[
+          selectedCountry as keyof typeof dataSourcesByCountry
+        ],
+      ]);
     } else {
-      setDataSources([])
+      setDataSources([]);
     }
-  }, [selectedCountry])
+  }, [selectedCountry]);
 
   const handleDataSourceChange = (index: number, checked: boolean) => {
-    const updatedSources = [...dataSources]
-    updatedSources[index].checked = checked
-    setDataSources(updatedSources)
-  }
+    const updatedSources = [...dataSources];
+    updatedSources[index].checked = checked;
+    setDataSources(updatedSources);
+  };
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]
+    const file = event.target.files?.[0];
     if (file) {
-      setSelectedFile(file)
+      setSelectedFile(file);
     }
-  }
+  };
 
   const addNewDataSource = () => {
     if (!newDataSourceName.trim()) {
-      alert("Please enter a data source name")
-      return
+      alert("Please enter a data source name");
+      return;
     }
 
     if (uploadMethod === "file" && !selectedFile) {
-      alert("Please select a file to upload")
-      return
+      alert("Please select a file to upload");
+      return;
     }
 
     if (uploadMethod === "url" && !webUrl.trim()) {
-      alert("Please enter a valid URL")
-      return
+      alert("Please enter a valid URL");
+      return;
     }
 
     const newSource = {
       name: newDataSourceName.trim(),
       checked: true,
       description: newDataSourceDescription.trim(),
-      source: uploadMethod === "file" ? `File: ${selectedFile?.name}` : `URL: ${webUrl}`,
+      source:
+        uploadMethod === "file"
+          ? `File: ${selectedFile?.name}`
+          : `URL: ${webUrl}`,
       uploadMethod,
-    }
+    };
 
-    setDataSources([...dataSources, newSource])
+    setDataSources([...dataSources, newSource]);
 
     // Reset form
-    setNewDataSourceName("")
-    setNewDataSourceDescription("")
-    setSelectedFile(null)
-    setWebUrl("")
-    setShowAddDataSourceDialog(false)
-  }
+    setNewDataSourceName("");
+    setNewDataSourceDescription("");
+    setSelectedFile(null);
+    setWebUrl("");
+    setShowAddDataSourceDialog(false);
+  };
 
   const removeDataSource = (index: number) => {
-    const updatedSources = dataSources.filter((_, i) => i !== index)
-    setDataSources(updatedSources)
-  }
+    const updatedSources = dataSources.filter((_, i) => i !== index);
+    setDataSources(updatedSources);
+  };
 
   const handleGenerateReport = () => {
-    if (!selectedCountry || !selectedCategory || !selectedProduct || !selectedBrand || !selectedBrandCode) {
-      alert("Please fill in all required fields")
-      return
+    if (
+      !selectedCountry ||
+      !selectedCategory ||
+      !selectedProduct ||
+      !selectedBrand ||
+      !selectedBrandCode
+    ) {
+      alert("Please fill in all required fields");
+      return;
     }
 
-    setIsGenerating(true)
+    setIsGenerating(true);
 
     // Simulate report generation
     setTimeout(() => {
-      const language = countryLanguages[selectedCountry as keyof typeof countryLanguages]
-      const reportId = `SR-${Date.now()}`
+      const language =
+        countryLanguages[selectedCountry as keyof typeof countryLanguages];
+      const reportId = `SR-${Date.now()}`;
 
       setGeneratedReport({
         id: reportId,
@@ -297,27 +335,27 @@ export default function CreateSafetyReport() {
         date,
         dataSources: dataSources.filter((source) => source.checked),
         generatedDate: new Date().toISOString(),
-      })
+      });
 
-      setIsGenerating(false)
-      setShowReportPreview(true)
-    }, 3000)
-  }
+      setIsGenerating(false);
+      setShowReportPreview(true);
+    }, 3000);
+  };
 
   const handleEditDocument = () => {
-    alert("Opening document editor...")
-  }
+    alert("Opening document editor...");
+  };
 
   const handleDownload = (format: "pdf" | "word") => {
-    alert(`Downloading report as ${format.toUpperCase()}...`)
-  }
+    alert(`Downloading report as ${format.toUpperCase()}...`);
+  };
 
   const handlePrint = () => {
-    alert("Opening print dialog...")
-  }
+    alert("Opening print dialog...");
+  };
 
   const handleSendForApproval = () => {
-    if (!generatedReport) return
+    if (!generatedReport) return;
 
     // Save to pending reports
     const pendingReport = {
@@ -327,27 +365,30 @@ export default function CreateSafetyReport() {
       status: "Pending",
       date: new Date().toISOString().split("T")[0],
       approver: "Pending",
-    }
+    };
 
     // Add to localStorage (simulating database save)
-    const existingReports = localStorage.getItem("pendingReports")
-    const reports = existingReports ? JSON.parse(existingReports) : []
-    reports.push(pendingReport)
-    localStorage.setItem("pendingReports", JSON.stringify(reports))
+    const existingReports = localStorage.getItem("pendingReports");
+    const reports = existingReports ? JSON.parse(existingReports) : [];
+    reports.push(pendingReport);
+    localStorage.setItem("pendingReports", JSON.stringify(reports));
 
-    alert("Report sent for approval successfully!")
+    alert("Report sent for approval successfully!");
 
     // Navigate to Safety Report Generator with Pending tab
-    router.push("/safety-report-generator?tab=pending")
-  }
+    router.push("/safety-report-generator?tab=pending");
+  };
 
   const availableProducts = selectedCategory
-    ? productsByCategory[selectedCategory as keyof typeof productsByCategory] || []
-    : []
+    ? productsByCategory[selectedCategory as keyof typeof productsByCategory] ||
+      []
+    : [];
   const availableBrands = selectedCategory
     ? brandsByCategory[selectedCategory as keyof typeof brandsByCategory] || []
-    : []
-  const availableBrandCodes = selectedBrand ? brandCodes[selectedBrand as keyof typeof brandCodes] || [] : []
+    : [];
+  const availableBrandCodes = selectedBrand
+    ? brandCodes[selectedBrand as keyof typeof brandCodes] || []
+    : [];
 
   if (showReportPreview && generatedReport) {
     return (
@@ -371,7 +412,9 @@ export default function CreateSafetyReport() {
                       <ArrowLeft size={16} className="mr-2" />
                       Back
                     </Button>
-                    <h1 className="text-lg font-semibold text-black">Preview of Report Draft</h1>
+                    <h1 className="text-lg font-semibold text-black">
+                      Preview of Report Draft
+                    </h1>
                   </div>
 
                   <div className="flex items-center space-x-2">
@@ -385,24 +428,39 @@ export default function CreateSafetyReport() {
                       Edit Document
                     </Button>
 
-                    <Button variant="outline" size="sm" onClick={handlePrint} className="text-black border-gray-300">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={handlePrint}
+                      className="text-black border-gray-300"
+                    >
                       <Printer size={14} className="mr-2" />
                       Print
                     </Button>
 
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="outline" size="sm" className="text-black border-gray-300">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="text-black border-gray-300"
+                        >
                           <Download size={14} className="mr-2" />
                           Download
                           <ChevronDown size={14} className="ml-1" />
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuItem onClick={() => handleDownload("pdf")} className="text-black">
+                        <DropdownMenuItem
+                          onClick={() => handleDownload("pdf")}
+                          className="text-black"
+                        >
                           Download as PDF
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => handleDownload("word")} className="text-black">
+                        <DropdownMenuItem
+                          onClick={() => handleDownload("word")}
+                          className="text-black"
+                        >
                           Download as Word
                         </DropdownMenuItem>
                       </DropdownMenuContent>
@@ -424,21 +482,28 @@ export default function CreateSafetyReport() {
                 <div className="max-w-4xl mx-auto">
                   {/* Report Header */}
                   <div className="text-center mb-8">
-                    <h1 className="text-2xl font-bold text-black mb-2">Safety Assessment Report</h1>
+                    <h1 className="text-2xl font-bold text-black mb-2">
+                      Safety Assessment Report
+                    </h1>
                     <p className="text-lg text-black">
                       {generatedReport.product} - {generatedReport.country}
                     </p>
                     <p className="text-sm text-gray-600">
-                      Generated in {generatedReport.language} | Report ID: {generatedReport.id}
+                      Generated in {generatedReport.language} | Report ID:{" "}
+                      {generatedReport.id}
                     </p>
                   </div>
 
                   {/* Product Information */}
                   <div className="mb-8">
-                    <h2 className="text-xl font-semibold text-black mb-4">Product Information</h2>
+                    <h2 className="text-xl font-semibold text-black mb-4">
+                      Product Information
+                    </h2>
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <span className="font-medium text-black">Product Name:</span>
+                        <span className="font-medium text-black">
+                          Product Name:
+                        </span>
                         <p className="text-black">{generatedReport.product}</p>
                       </div>
                       <div>
@@ -446,11 +511,17 @@ export default function CreateSafetyReport() {
                         <p className="text-black">{generatedReport.brand}</p>
                       </div>
                       <div>
-                        <span className="font-medium text-black">Brand Code:</span>
-                        <p className="text-black">{generatedReport.brandCode}</p>
+                        <span className="font-medium text-black">
+                          Brand Code:
+                        </span>
+                        <p className="text-black">
+                          {generatedReport.brandCode}
+                        </p>
                       </div>
                       <div>
-                        <span className="font-medium text-black">Category:</span>
+                        <span className="font-medium text-black">
+                          Category:
+                        </span>
                         <p className="text-black">{generatedReport.category}</p>
                       </div>
                     </div>
@@ -458,52 +529,84 @@ export default function CreateSafetyReport() {
 
                   {/* Safety Assessment */}
                   <div className="mb-8">
-                    <h2 className="text-xl font-semibold text-black mb-4">Safety Assessment</h2>
+                    <h2 className="text-xl font-semibold text-black mb-4">
+                      Safety Assessment
+                    </h2>
                     {generatedReport.warningStatement && (
                       <div className="mb-4">
-                        <span className="font-medium text-black">Warning Statement:</span>
-                        <p className="text-black mt-1">{generatedReport.warningStatement}</p>
+                        <span className="font-medium text-black">
+                          Warning Statement:
+                        </span>
+                        <p className="text-black mt-1">
+                          {generatedReport.warningStatement}
+                        </p>
                       </div>
                     )}
                     {generatedReport.useInstructions && (
                       <div className="mb-4">
-                        <span className="font-medium text-black">Use Instructions:</span>
-                        <p className="text-black mt-1">{generatedReport.useInstructions}</p>
+                        <span className="font-medium text-black">
+                          Use Instructions:
+                        </span>
+                        <p className="text-black mt-1">
+                          {generatedReport.useInstructions}
+                        </p>
                       </div>
                     )}
                   </div>
 
                   {/* Data Sources */}
                   <div className="mb-8">
-                    <h2 className="text-xl font-semibold text-black mb-4">Referenced Data Sources</h2>
+                    <h2 className="text-xl font-semibold text-black mb-4">
+                      Referenced Data Sources
+                    </h2>
                     <ul className="list-disc list-inside space-y-2">
-                      {generatedReport.dataSources.map((source: any, index: number) => (
-                        <li key={index} className="text-black">
-                          {source.name}
-                          {source.source && <span className="text-gray-600 ml-2">({source.source})</span>}
-                        </li>
-                      ))}
+                      {generatedReport.dataSources.map(
+                        (source: any, index: number) => (
+                          <li key={index} className="text-black">
+                            {source.name}
+                            {source.source && (
+                              <span className="text-gray-600 ml-2">
+                                ({source.source})
+                              </span>
+                            )}
+                          </li>
+                        )
+                      )}
                     </ul>
                   </div>
 
                   {/* Assessment Details */}
                   <div className="mb-8">
-                    <h2 className="text-xl font-semibold text-black mb-4">Assessment Details</h2>
+                    <h2 className="text-xl font-semibold text-black mb-4">
+                      Assessment Details
+                    </h2>
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <span className="font-medium text-black">Assessor:</span>
-                        <p className="text-black">{generatedReport.assessorName || "Not specified"}</p>
+                        <span className="font-medium text-black">
+                          Assessor:
+                        </span>
+                        <p className="text-black">
+                          {generatedReport.assessorName || "Not specified"}
+                        </p>
                       </div>
                       <div>
-                        <span className="font-medium text-black">Assessment Date:</span>
-                        <p className="text-black">{generatedReport.date || "Not specified"}</p>
+                        <span className="font-medium text-black">
+                          Assessment Date:
+                        </span>
+                        <p className="text-black">
+                          {generatedReport.date || "Not specified"}
+                        </p>
                       </div>
                       <div>
-                        <span className="font-medium text-black">Country/Region:</span>
+                        <span className="font-medium text-black">
+                          Country/Region:
+                        </span>
                         <p className="text-black">{generatedReport.country}</p>
                       </div>
                       <div>
-                        <span className="font-medium text-black">Report Language:</span>
+                        <span className="font-medium text-black">
+                          Report Language:
+                        </span>
                         <p className="text-black">{generatedReport.language}</p>
                       </div>
                     </div>
@@ -511,19 +614,27 @@ export default function CreateSafetyReport() {
 
                   {/* Conclusion */}
                   <div className="mb-8">
-                    <h2 className="text-xl font-semibold text-black mb-4">Conclusion</h2>
+                    <h2 className="text-xl font-semibold text-black mb-4">
+                      Conclusion
+                    </h2>
                     <p className="text-black">
-                      Based on the comprehensive safety assessment conducted using the referenced data sources, the
-                      product {generatedReport.product} meets the regulatory requirements for {generatedReport.country}.
-                      This assessment has been conducted in accordance with local regulatory standards and guidelines.
+                      Based on the comprehensive safety assessment conducted
+                      using the referenced data sources, the product{" "}
+                      {generatedReport.product} meets the regulatory
+                      requirements for {generatedReport.country}. This
+                      assessment has been conducted in accordance with local
+                      regulatory standards and guidelines.
                     </p>
                   </div>
 
                   {/* Footer */}
                   <div className="border-t pt-4 text-center text-sm text-gray-600">
                     <p>
-                      This report was generated on {new Date(generatedReport.generatedDate).toLocaleDateString()} by the
-                      Kimberly-Clark R&D Safety Report Generator
+                      This report was generated on{" "}
+                      {new Date(
+                        generatedReport.generatedDate
+                      ).toLocaleDateString()}{" "}
+                      by the kraft-heinz R&D Safety Report Generator
                     </p>
                   </div>
                 </div>
@@ -532,7 +643,7 @@ export default function CreateSafetyReport() {
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -555,15 +666,22 @@ export default function CreateSafetyReport() {
                 Back to Safety Reports
               </Button>
               <div>
-                <h1 className="text-2xl font-bold text-black">Create New Safety Report</h1>
-                <p className="text-sm text-black">Generate a comprehensive safety report for regulatory submission</p>
+                <h1 className="text-2xl font-bold text-black">
+                  Create New Safety Report
+                </h1>
+                <p className="text-sm text-black">
+                  Generate a comprehensive safety report for regulatory
+                  submission
+                </p>
               </div>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Left Panel - Form */}
               <div className="lg:col-span-2 bg-white rounded-lg border border-gray-200 p-6">
-                <h3 className="text-lg font-semibold text-black mb-6">Generate Safety Report</h3>
+                <h3 className="text-lg font-semibold text-black mb-6">
+                  Generate Safety Report
+                </h3>
 
                 <div className="space-y-6">
                   {/* Country */}
@@ -571,7 +689,10 @@ export default function CreateSafetyReport() {
                     <label className="block text-sm font-medium text-black mb-2">
                       Country <span className="text-red-500">*</span>
                     </label>
-                    <Select value={selectedCountry} onValueChange={setSelectedCountry}>
+                    <Select
+                      value={selectedCountry}
+                      onValueChange={setSelectedCountry}
+                    >
                       <SelectTrigger>
                         <SelectValue placeholder="Select country..." />
                       </SelectTrigger>
@@ -585,14 +706,21 @@ export default function CreateSafetyReport() {
                     </Select>
                     {selectedCountry && (
                       <p className="text-xs text-blue-600 mt-1">
-                        Report will be generated in {countryLanguages[selectedCountry as keyof typeof countryLanguages]}
+                        Report will be generated in{" "}
+                        {
+                          countryLanguages[
+                            selectedCountry as keyof typeof countryLanguages
+                          ]
+                        }
                       </p>
                     )}
                   </div>
 
                   {/* Product Details */}
                   <div>
-                    <h4 className="text-md font-semibold text-black mb-4">Product Details</h4>
+                    <h4 className="text-md font-semibold text-black mb-4">
+                      Product Details
+                    </h4>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {/* Category */}
@@ -600,7 +728,10 @@ export default function CreateSafetyReport() {
                         <label className="block text-sm font-medium text-black mb-2">
                           Category <span className="text-red-500">*</span>
                         </label>
-                        <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                        <Select
+                          value={selectedCategory}
+                          onValueChange={setSelectedCategory}
+                        >
                           <SelectTrigger>
                             <SelectValue placeholder="Select category..." />
                           </SelectTrigger>
@@ -619,7 +750,10 @@ export default function CreateSafetyReport() {
                         <label className="block text-sm font-medium text-black mb-2">
                           Product Name <span className="text-red-500">*</span>
                         </label>
-                        <Select value={selectedProduct} onValueChange={setSelectedProduct}>
+                        <Select
+                          value={selectedProduct}
+                          onValueChange={setSelectedProduct}
+                        >
                           <SelectTrigger>
                             <SelectValue placeholder="Select product..." />
                           </SelectTrigger>
@@ -638,7 +772,10 @@ export default function CreateSafetyReport() {
                         <label className="block text-sm font-medium text-black mb-2">
                           Brand Name <span className="text-red-500">*</span>
                         </label>
-                        <Select value={selectedBrand} onValueChange={setSelectedBrand}>
+                        <Select
+                          value={selectedBrand}
+                          onValueChange={setSelectedBrand}
+                        >
                           <SelectTrigger>
                             <SelectValue placeholder="Select brand..." />
                           </SelectTrigger>
@@ -657,7 +794,10 @@ export default function CreateSafetyReport() {
                         <label className="block text-sm font-medium text-black mb-2">
                           Brand Code <span className="text-red-500">*</span>
                         </label>
-                        <Select value={selectedBrandCode} onValueChange={setSelectedBrandCode}>
+                        <Select
+                          value={selectedBrandCode}
+                          onValueChange={setSelectedBrandCode}
+                        >
                           <SelectTrigger>
                             <SelectValue placeholder="Select code..." />
                           </SelectTrigger>
@@ -675,7 +815,9 @@ export default function CreateSafetyReport() {
 
                   {/* Warning Statement */}
                   <div>
-                    <label className="block text-sm font-medium text-black mb-2">Warning Statement</label>
+                    <label className="block text-sm font-medium text-black mb-2">
+                      Warning Statement
+                    </label>
                     <Textarea
                       placeholder="Enter warning statements..."
                       value={warningStatement}
@@ -686,7 +828,9 @@ export default function CreateSafetyReport() {
 
                   {/* Use Instructions */}
                   <div>
-                    <label className="block text-sm font-medium text-black mb-2">Use Instructions</label>
+                    <label className="block text-sm font-medium text-black mb-2">
+                      Use Instructions
+                    </label>
                     <Textarea
                       placeholder="Enter use instructions..."
                       value={useInstructions}
@@ -698,7 +842,9 @@ export default function CreateSafetyReport() {
                   {/* Assessor and Date */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-black mb-2">Assessor's Name</label>
+                      <label className="block text-sm font-medium text-black mb-2">
+                        Assessor's Name
+                      </label>
                       <Input
                         placeholder="Enter assessor name..."
                         value={assessorName}
@@ -706,8 +852,14 @@ export default function CreateSafetyReport() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-black mb-2">Date</label>
-                      <Input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
+                      <label className="block text-sm font-medium text-black mb-2">
+                        Date
+                      </label>
+                      <Input
+                        type="date"
+                        value={date}
+                        onChange={(e) => setDate(e.target.value)}
+                      />
                     </div>
                   </div>
 
@@ -718,7 +870,9 @@ export default function CreateSafetyReport() {
                       disabled={isGenerating}
                       className="bg-blue-600 hover:bg-blue-700 text-white flex-1"
                     >
-                      {isGenerating ? "Generating Report..." : "Generate Report"}
+                      {isGenerating
+                        ? "Generating Report..."
+                        : "Generate Report"}
                     </Button>
                   </div>
                 </div>
@@ -726,26 +880,45 @@ export default function CreateSafetyReport() {
 
               {/* Right Panel - Available Data Sources */}
               <div className="bg-white rounded-lg border border-gray-200 p-6">
-                <h3 className="text-lg font-semibold text-black mb-4">Available Data Sources</h3>
+                <h3 className="text-lg font-semibold text-black mb-4">
+                  Available Data Sources
+                </h3>
 
                 {!selectedCountry ? (
                   <div className="text-center py-8">
                     <div className="text-gray-400 mb-2">📄</div>
-                    <p className="text-sm text-gray-600">Select a Country to view available data sources</p>
+                    <p className="text-sm text-gray-600">
+                      Select a Country to view available data sources
+                    </p>
                   </div>
                 ) : (
                   <div className="space-y-4">
                     {dataSources.map((source, index) => (
-                      <div key={index} className="flex items-start space-x-3 group">
+                      <div
+                        key={index}
+                        className="flex items-start space-x-3 group"
+                      >
                         <Checkbox
                           checked={source.checked}
-                          onCheckedChange={(checked) => handleDataSourceChange(index, checked as boolean)}
+                          onCheckedChange={(checked) =>
+                            handleDataSourceChange(index, checked as boolean)
+                          }
                           className="mt-1"
                         />
                         <div className="flex-1">
-                          <label className="text-sm text-black leading-relaxed cursor-pointer">{source.name}</label>
-                          {source.description && <p className="text-xs text-gray-500 mt-1">{source.description}</p>}
-                          {source.source && <p className="text-xs text-blue-600 mt-1">{source.source}</p>}
+                          <label className="text-sm text-black leading-relaxed cursor-pointer">
+                            {source.name}
+                          </label>
+                          {source.description && (
+                            <p className="text-xs text-gray-500 mt-1">
+                              {source.description}
+                            </p>
+                          )}
+                          {source.source && (
+                            <p className="text-xs text-blue-600 mt-1">
+                              {source.source}
+                            </p>
+                          )}
                         </div>
                         {source.uploadMethod && (
                           <Button
@@ -780,7 +953,10 @@ export default function CreateSafetyReport() {
       </div>
 
       {/* Add New Data Source Dialog */}
-      <Dialog open={showAddDataSourceDialog} onOpenChange={setShowAddDataSourceDialog}>
+      <Dialog
+        open={showAddDataSourceDialog}
+        onOpenChange={setShowAddDataSourceDialog}
+      >
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle>Add New Data Source</DialogTitle>
@@ -789,7 +965,10 @@ export default function CreateSafetyReport() {
           <div className="space-y-4">
             {/* Data Source Name */}
             <div>
-              <Label htmlFor="dataSourceName" className="text-sm font-medium text-black">
+              <Label
+                htmlFor="dataSourceName"
+                className="text-sm font-medium text-black"
+              >
                 Data Source Name <span className="text-red-500">*</span>
               </Label>
               <Input
@@ -803,7 +982,10 @@ export default function CreateSafetyReport() {
 
             {/* Description */}
             <div>
-              <Label htmlFor="dataSourceDescription" className="text-sm font-medium text-black">
+              <Label
+                htmlFor="dataSourceDescription"
+                className="text-sm font-medium text-black"
+              >
                 Description (Optional)
               </Label>
               <Textarea
@@ -818,7 +1000,9 @@ export default function CreateSafetyReport() {
 
             {/* Upload Method Selection */}
             <div>
-              <Label className="text-sm font-medium text-black mb-3 block">Upload Method</Label>
+              <Label className="text-sm font-medium text-black mb-3 block">
+                Upload Method
+              </Label>
               <div className="flex space-x-4">
                 <Button
                   variant={uploadMethod === "file" ? "default" : "outline"}
@@ -842,7 +1026,10 @@ export default function CreateSafetyReport() {
             {/* File Upload */}
             {uploadMethod === "file" && (
               <div>
-                <Label htmlFor="fileUpload" className="text-sm font-medium text-black">
+                <Label
+                  htmlFor="fileUpload"
+                  className="text-sm font-medium text-black"
+                >
                   Select File <span className="text-red-500">*</span>
                 </Label>
                 <Input
@@ -852,14 +1039,21 @@ export default function CreateSafetyReport() {
                   className="mt-1"
                   accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.csv"
                 />
-                {selectedFile && <p className="text-xs text-green-600 mt-1">Selected: {selectedFile.name}</p>}
+                {selectedFile && (
+                  <p className="text-xs text-green-600 mt-1">
+                    Selected: {selectedFile.name}
+                  </p>
+                )}
               </div>
             )}
 
             {/* Web URL */}
             {uploadMethod === "url" && (
               <div>
-                <Label htmlFor="webUrl" className="text-sm font-medium text-black">
+                <Label
+                  htmlFor="webUrl"
+                  className="text-sm font-medium text-black"
+                >
                   Web URL <span className="text-red-500">*</span>
                 </Label>
                 <Input
@@ -874,15 +1068,21 @@ export default function CreateSafetyReport() {
           </div>
 
           <DialogFooter>
-            <Button variant="outline" onClick={() => setShowAddDataSourceDialog(false)}>
+            <Button
+              variant="outline"
+              onClick={() => setShowAddDataSourceDialog(false)}
+            >
               Cancel
             </Button>
-            <Button onClick={addNewDataSource} className="bg-blue-600 hover:bg-blue-700 text-white">
+            <Button
+              onClick={addNewDataSource}
+              className="bg-blue-600 hover:bg-blue-700 text-white"
+            >
               Add Data Source
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
     </div>
-  )
+  );
 }

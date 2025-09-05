@@ -1,14 +1,26 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { useRouter, useParams } from "next/navigation"
-import Sidebar from "@/components/sidebar"
-import Header from "@/components/header"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Badge } from "@/components/ui/badge"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { ArrowLeft, Search, Download, FileText, CheckCircle } from "lucide-react"
+import { useState, useEffect } from "react";
+import { useRouter, useParams } from "next/navigation";
+import Sidebar from "@/components/sidebar";
+import Header from "@/components/header";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  ArrowLeft,
+  Search,
+  Download,
+  FileText,
+  CheckCircle,
+} from "lucide-react";
 
 const compliantProductData = {
   "HG-001-US": {
@@ -17,7 +29,7 @@ const compliantProductData = {
     category: "Baby Care",
     status: "Active",
     region: "United States",
-    manufacturer: "Kimberly-Clark Corporation",
+    manufacturer: "kraft-heinz Corporation",
     launchDate: "2021-03-10",
     totalMaterials: 6,
     restrictedMaterials: 0,
@@ -29,7 +41,7 @@ const compliantProductData = {
     category: "Family Care",
     status: "Active",
     region: "United States",
-    manufacturer: "Kimberly-Clark Corporation",
+    manufacturer: "kraft-heinz Corporation",
     launchDate: "2020-08-15",
     totalMaterials: 4,
     restrictedMaterials: 0,
@@ -41,7 +53,7 @@ const compliantProductData = {
     category: "Family Care",
     status: "Active",
     region: "Canada",
-    manufacturer: "Kimberly-Clark Corporation",
+    manufacturer: "kraft-heinz Corporation",
     launchDate: "2021-11-20",
     totalMaterials: 5,
     restrictedMaterials: 0,
@@ -53,7 +65,7 @@ const compliantProductData = {
     category: "Family Care",
     status: "Active",
     region: "United States",
-    manufacturer: "Kimberly-Clark Corporation",
+    manufacturer: "kraft-heinz Corporation",
     launchDate: "2020-05-12",
     totalMaterials: 4,
     restrictedMaterials: 0,
@@ -65,13 +77,13 @@ const compliantProductData = {
     category: "Feminine Care",
     status: "Active",
     region: "United States",
-    manufacturer: "Kimberly-Clark Corporation",
+    manufacturer: "kraft-heinz Corporation",
     launchDate: "2022-01-08",
     totalMaterials: 7,
     restrictedMaterials: 0,
     lastUpdated: "2024-01-16",
   },
-}
+};
 
 const compliantBillOfMaterials = {
   "HG-001-US": [
@@ -158,7 +170,7 @@ const compliantBillOfMaterials = {
       status: "Allowed",
     },
   ],
-}
+};
 
 const countries = [
   "United States",
@@ -177,27 +189,31 @@ const countries = [
   "South Korea",
   "India",
   "China",
-]
+];
 
 export default function CompliantProductAnalysis() {
-  const router = useRouter()
-  const params = useParams()
-  const productId = params.productId as string
+  const router = useRouter();
+  const params = useParams();
+  const productId = params.productId as string;
 
-  const [selectedCountry, setSelectedCountry] = useState("")
+  const [selectedCountry, setSelectedCountry] = useState("");
 
   useEffect(() => {
-    const isAuthenticated = localStorage.getItem("isAuthenticated")
+    const isAuthenticated = localStorage.getItem("isAuthenticated");
     if (!isAuthenticated) {
-      router.push("/login")
+      router.push("/login");
     }
-  }, [router])
+  }, [router]);
 
-  const product = compliantProductData[productId as keyof typeof compliantProductData]
-  const billOfMaterials = compliantBillOfMaterials[productId as keyof typeof compliantBillOfMaterials] || []
+  const product =
+    compliantProductData[productId as keyof typeof compliantProductData];
+  const billOfMaterials =
+    compliantBillOfMaterials[
+      productId as keyof typeof compliantBillOfMaterials
+    ] || [];
 
   if (!product) {
-    return <div>Product not found</div>
+    return <div>Product not found</div>;
   }
 
   return (
@@ -221,12 +237,19 @@ export default function CompliantProductAnalysis() {
                   Back
                 </Button>
                 <div>
-                  <h1 className="text-2xl font-bold text-black">{product.name}</h1>
-                  <p className="text-sm text-black">Product Details & Compliance Analysis</p>
+                  <h1 className="text-2xl font-bold text-black">
+                    {product.name}
+                  </h1>
+                  <p className="text-sm text-black">
+                    Product Details & Compliance Analysis
+                  </p>
                 </div>
               </div>
               <div className="flex items-center space-x-2">
-                <Button variant="outline" className="text-black border-gray-300">
+                <Button
+                  variant="outline"
+                  className="text-black border-gray-300"
+                >
                   <FileText size={16} className="mr-2" />
                   Export Report
                 </Button>
@@ -239,62 +262,96 @@ export default function CompliantProductAnalysis() {
 
             {/* Product Overview */}
             <div className="bg-white rounded-lg border border-gray-200 p-6 mb-8">
-              <h3 className="text-lg font-semibold text-black mb-6">Product Overview</h3>
+              <h3 className="text-lg font-semibold text-black mb-6">
+                Product Overview
+              </h3>
 
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* Basic Information */}
                 <div>
-                  <h4 className="text-sm font-semibold text-black mb-4">Basic Information</h4>
+                  <h4 className="text-sm font-semibold text-black mb-4">
+                    Basic Information
+                  </h4>
                   <div className="space-y-3">
                     <div>
                       <span className="text-sm text-gray-600">Product ID</span>
-                      <p className="text-sm font-medium text-black">{product.id}</p>
+                      <p className="text-sm font-medium text-black">
+                        {product.id}
+                      </p>
                     </div>
                     <div>
                       <span className="text-sm text-gray-600">Category</span>
-                      <p className="text-sm font-medium text-black">{product.category}</p>
+                      <p className="text-sm font-medium text-black">
+                        {product.category}
+                      </p>
                     </div>
                     <div>
                       <span className="text-sm text-gray-600">Status</span>
-                      <Badge className="bg-green-100 text-green-800 hover:bg-green-100">{product.status}</Badge>
+                      <Badge className="bg-green-100 text-green-800 hover:bg-green-100">
+                        {product.status}
+                      </Badge>
                     </div>
                   </div>
                 </div>
 
                 {/* Manufacturing */}
                 <div>
-                  <h4 className="text-sm font-semibold text-black mb-4">Manufacturing</h4>
+                  <h4 className="text-sm font-semibold text-black mb-4">
+                    Manufacturing
+                  </h4>
                   <div className="space-y-3">
                     <div>
                       <span className="text-sm text-gray-600">Region</span>
-                      <p className="text-sm font-medium text-black">{product.region}</p>
+                      <p className="text-sm font-medium text-black">
+                        {product.region}
+                      </p>
                     </div>
                     <div>
-                      <span className="text-sm text-gray-600">Manufacturer</span>
-                      <p className="text-sm font-medium text-black">{product.manufacturer}</p>
+                      <span className="text-sm text-gray-600">
+                        Manufacturer
+                      </span>
+                      <p className="text-sm font-medium text-black">
+                        {product.manufacturer}
+                      </p>
                     </div>
                     <div>
                       <span className="text-sm text-gray-600">Launch Date</span>
-                      <p className="text-sm font-medium text-black">{product.launchDate}</p>
+                      <p className="text-sm font-medium text-black">
+                        {product.launchDate}
+                      </p>
                     </div>
                   </div>
                 </div>
 
                 {/* Compliance Summary */}
                 <div>
-                  <h4 className="text-sm font-semibold text-black mb-4">Compliance Summary</h4>
+                  <h4 className="text-sm font-semibold text-black mb-4">
+                    Compliance Summary
+                  </h4>
                   <div className="space-y-3">
                     <div>
-                      <span className="text-sm text-gray-600">Total Materials</span>
-                      <p className="text-sm font-medium text-black">{product.totalMaterials}</p>
+                      <span className="text-sm text-gray-600">
+                        Total Materials
+                      </span>
+                      <p className="text-sm font-medium text-black">
+                        {product.totalMaterials}
+                      </p>
                     </div>
                     <div>
-                      <span className="text-sm text-gray-600">Restricted Materials</span>
-                      <p className="text-sm font-medium text-black">{product.restrictedMaterials}</p>
+                      <span className="text-sm text-gray-600">
+                        Restricted Materials
+                      </span>
+                      <p className="text-sm font-medium text-black">
+                        {product.restrictedMaterials}
+                      </p>
                     </div>
                     <div>
-                      <span className="text-sm text-gray-600">Last Updated</span>
-                      <p className="text-sm font-medium text-black">{product.lastUpdated}</p>
+                      <span className="text-sm text-gray-600">
+                        Last Updated
+                      </span>
+                      <p className="text-sm font-medium text-black">
+                        {product.lastUpdated}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -303,12 +360,17 @@ export default function CompliantProductAnalysis() {
               {/* Compliance Alert */}
               <div className="bg-green-50 border border-green-200 rounded-lg p-4 mt-6">
                 <div className="flex items-start">
-                  <CheckCircle size={20} className="text-green-600 mr-3 mt-0.5" />
+                  <CheckCircle
+                    size={20}
+                    className="text-green-600 mr-3 mt-0.5"
+                  />
                   <div>
-                    <h4 className="text-sm font-semibold text-green-900 mb-1">Product is Fully Compliant</h4>
+                    <h4 className="text-sm font-semibold text-green-900 mb-1">
+                      Product is Fully Compliant
+                    </h4>
                     <p className="text-sm text-green-800">
-                      This product contains no restricted materials and meets all regulatory requirements across target
-                      markets.
+                      This product contains no restricted materials and meets
+                      all regulatory requirements across target markets.
                     </p>
                   </div>
                 </div>
@@ -317,10 +379,17 @@ export default function CompliantProductAnalysis() {
 
             {/* Country Selection */}
             <div className="bg-white rounded-lg border border-gray-200 p-6 mb-8">
-              <h3 className="text-lg font-semibold text-black mb-4">Regulatory Analysis</h3>
+              <h3 className="text-lg font-semibold text-black mb-4">
+                Regulatory Analysis
+              </h3>
               <div className="flex items-center space-x-4">
-                <label className="text-sm font-medium text-black">Select Country for Compliance Check:</label>
-                <Select value={selectedCountry} onValueChange={setSelectedCountry}>
+                <label className="text-sm font-medium text-black">
+                  Select Country for Compliance Check:
+                </label>
+                <Select
+                  value={selectedCountry}
+                  onValueChange={setSelectedCountry}
+                >
                   <SelectTrigger className="w-64">
                     <SelectValue placeholder="Select country..." />
                   </SelectTrigger>
@@ -334,7 +403,9 @@ export default function CompliantProductAnalysis() {
                 </Select>
               </div>
               {selectedCountry && (
-                <p className="text-sm text-green-600 mt-2">✓ Product is compliant with {selectedCountry} regulations</p>
+                <p className="text-sm text-green-600 mt-2">
+                  ✓ Product is compliant with {selectedCountry} regulations
+                </p>
               )}
             </div>
 
@@ -342,12 +413,20 @@ export default function CompliantProductAnalysis() {
             <div className="bg-white rounded-lg border border-gray-200">
               <div className="p-6 border-b border-gray-200">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-lg font-semibold text-black">Bill of Materials</h3>
+                  <h3 className="text-lg font-semibold text-black">
+                    Bill of Materials
+                  </h3>
                   <div className="flex items-center space-x-4">
                     <span className="text-sm text-black">Total: 100.0%</span>
                     <div className="relative">
-                      <Search size={16} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                      <Input placeholder="Search materials or CAS numbers..." className="pl-10 w-64 text-black" />
+                      <Search
+                        size={16}
+                        className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                      />
+                      <Input
+                        placeholder="Search materials or CAS numbers..."
+                        className="pl-10 w-64 text-black"
+                      />
                     </div>
                   </div>
                 </div>
@@ -379,16 +458,29 @@ export default function CompliantProductAnalysis() {
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
                     {billOfMaterials.map((material, index) => (
-                      <tr key={index} className="hover:bg-gray-50 bg-green-50 border-l-4 border-green-500">
+                      <tr
+                        key={index}
+                        className="hover:bg-gray-50 bg-green-50 border-l-4 border-green-500"
+                      >
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-black font-medium">
                           {material.material}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-600">{material.casNumber}</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-black">{material.percentage}%</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-600">{material.function}</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-600">{material.supplier}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-600">
+                          {material.casNumber}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-black">
+                          {material.percentage}%
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-600">
+                          {material.function}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-600">
+                          {material.supplier}
+                        </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <Badge className="bg-green-100 text-green-800 hover:bg-green-100">{material.status}</Badge>
+                          <Badge className="bg-green-100 text-green-800 hover:bg-green-100">
+                            {material.status}
+                          </Badge>
                         </td>
                       </tr>
                     ))}
@@ -399,33 +491,49 @@ export default function CompliantProductAnalysis() {
 
             {/* Compliance Summary */}
             <div className="bg-white rounded-lg border border-gray-200 p-6 mt-8">
-              <h3 className="text-lg font-semibold text-black mb-4">Compliance Summary</h3>
+              <h3 className="text-lg font-semibold text-black mb-4">
+                Compliance Summary
+              </h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="bg-green-50 p-6 rounded-lg border border-green-200">
                   <div className="flex items-center justify-between mb-2">
-                    <h4 className="text-sm font-semibold text-green-900">Regulatory Status</h4>
+                    <h4 className="text-sm font-semibold text-green-900">
+                      Regulatory Status
+                    </h4>
                     <CheckCircle size={16} className="text-green-600" />
                   </div>
-                  <div className="text-2xl font-bold text-green-900">Compliant</div>
-                  <p className="text-xs text-green-700 mt-1">All materials approved for use</p>
+                  <div className="text-2xl font-bold text-green-900">
+                    Compliant
+                  </div>
+                  <p className="text-xs text-green-700 mt-1">
+                    All materials approved for use
+                  </p>
                 </div>
 
                 <div className="bg-blue-50 p-6 rounded-lg border border-blue-200">
                   <div className="flex items-center justify-between mb-2">
-                    <h4 className="text-sm font-semibold text-blue-900">Market Access</h4>
+                    <h4 className="text-sm font-semibold text-blue-900">
+                      Market Access
+                    </h4>
                     <CheckCircle size={16} className="text-blue-600" />
                   </div>
                   <div className="text-2xl font-bold text-blue-900">Global</div>
-                  <p className="text-xs text-blue-700 mt-1">Approved for all target markets</p>
+                  <p className="text-xs text-blue-700 mt-1">
+                    Approved for all target markets
+                  </p>
                 </div>
 
                 <div className="bg-purple-50 p-6 rounded-lg border border-purple-200">
                   <div className="flex items-center justify-between mb-2">
-                    <h4 className="text-sm font-semibold text-purple-900">Risk Level</h4>
+                    <h4 className="text-sm font-semibold text-purple-900">
+                      Risk Level
+                    </h4>
                     <CheckCircle size={16} className="text-purple-600" />
                   </div>
                   <div className="text-2xl font-bold text-purple-900">Low</div>
-                  <p className="text-xs text-purple-700 mt-1">No regulatory risks identified</p>
+                  <p className="text-xs text-purple-700 mt-1">
+                    No regulatory risks identified
+                  </p>
                 </div>
               </div>
             </div>
@@ -433,5 +541,5 @@ export default function CompliantProductAnalysis() {
         </div>
       </div>
     </div>
-  )
+  );
 }
